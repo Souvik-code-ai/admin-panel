@@ -1559,8 +1559,6 @@ const LoginPage = ({ onLogin }: { onLogin: () => void }) => {
   );
 };
 
-// ─── HOME MANAGEMENT PAGE (merged from doc 1) ─────────────────────────────────
-
 // const HomeManagementPage = () => {
 //   const [tab, setTab] = useState<"clients" | "feed">("clients");
 //   const [editImages, setEditImages] = useState<string[]>([]);
@@ -4277,7 +4275,6 @@ const HomeManagementPage = () => {
     </div>
   );
 };
-// ─── EVENTS PAGE ──────────────────────────────────────────────────────────────
 
 // const EventsPage = () => {
 //   const [showModal, setShowModal] = useState(false);
@@ -6093,7 +6090,6 @@ const EventsPage = () => {
     </div>
   );
 };
-// ─── CAMPAIGNS PAGE ───────────────────────────────────────────────────────────
 
 // const CampaignsPage = () => {
 //   const [detailCampaign, setDetailCampaign] = useState<
@@ -8677,7 +8673,6 @@ const ActivationsPage = () => {
     </div>
   );
 };
-// ─── EXHIBITIONS PAGE ────────────────────────────────────────────────────────
 
 // const ExhibitionsPage = () => (
 //   <div>
@@ -10010,7 +10005,6 @@ const ExhibitionsPage = () => {
     </div>
   );
 };
-// ─── PRESENCE PAGE ────────────────────────────────────────────────────────────
 
 // ─── PROFILE PAGE ─────────────────────────────────────────────────────────────
 
@@ -10643,123 +10637,6 @@ const ProfilePage = () => {
   );
 };
 
-// ─── CASE STUDIES PAGE ────────────────────────────────────────────────────────
-
-// const CaseStudiesPage = () => {
-//   const [caseStudiesData, setCaseStudiesData] = useState(caseStudies);
-
-//   const [activeId, setActiveId] = useState(caseStudies[0].id);
-
-//   const activeStudy =
-//     caseStudiesData.find((item) => item.id === activeId) || caseStudiesData[0];
-//   const cs = activeStudy;
-//   const [modal, setModal] = useState<"add" | "edit" | null>(null);
-
-//   const [form, setForm] = useState({
-//     id: null,
-//     name: "",
-//     location: "",
-//     year: "",
-//     attendance: "",
-//     description: "",
-//     profileImage: "",
-//     featuredImages: [],
-//   });
-// const blankForm = () => ({
-//     id: null,
-//     name: "",
-//     location: "",
-//     year: "",
-//     attendance: "",
-//     description: "",
-//     image: "",
-//     featuredImages: [],
-// });
-//   const [deleteTarget, setDeleteTarget] = useState(null);
-
-//   const [toast, setToast] = useState("");
-
-//   const [lightbox, setLightbox] = useState(null);
-//   return (
-//     <div>
-//       <PageHeader
-//         title="Case Studies"
-//         subtitle="Manage in-depth case studies for your most impactful projects."
-//         action={
-//           <Btn
-//             icon={Plus}
-//             onClick={() => {
-//               setForm(blankForm());
-//               setModal("add");
-//             }}
-//           >
-//             Add Case Study
-//           </Btn>
-//         }
-//       />
-//       <div className="grid grid-cols-3 gap-6">
-//         <div className="col-span-2">
-//           <Card className="overflow-hidden">
-//             {cs.image ? (
-//     <img
-//         src={cs.image}
-//         className="w-full h-56 object-cover"
-//     />
-// ) : (
-//     <div className="flex items-center justify-center h-56 bg-slate-100">
-//         No Image
-//     </div>
-// )}
-//             <div className="p-6 space-y-4">
-//              <Field
-// label="Case Study Name"
-// value={form.name}
-// onChange={(e)=>
-// setForm({
-// ...form,
-// name:e.target.value
-// })}
-// />
-//               <div className="grid grid-cols-3 gap-3">
-//                 <Input label="Location" value={cs.location} />
-//                 <Input label="Year" value={cs.year} />
-//                 <Input label="Attendance" value={cs.attendance} />
-//               </div>
-//               <Input label="Description" value={cs.description} textarea />
-//              <FeaturedImagesGrid
-//     images={form.featuredImages}
-//     onRemove={removeFeaturedImage}
-//     onAdd={() => featuredImagesRef.current?.click()}
-//     fileRef={featuredImagesRef}
-//     onFileChange={handleFeaturedImagesChange}
-// />
-//                 <Upload size={18} className="text-[#94A3B8] mx-auto mb-1" />
-//                 <p className="text-xs text-[#64748B]"> <div className="grid grid-cols-3 gap-3">
-// {
-// cs.featuredImages.map((img)=>(
-//     <img
-//         src={img}
-//         onClick={()=>setLightbox(img)}
-//     />
-// ))
-// }
-// </div></p>
-//               </div>
-//               <Btn
-// icon={Save}
-// onClick={handleSave}
-// >
-//     {modal==="add"
-//         ? "Save Case Study"
-//         : "Save Changes"}
-// </Btn>
-//             </div>
-//           </Card>
-//         </div>
-//         <div>
-//           <p className="text-sm font-semibold text-[#0F172A] mb-3">
-//             All Case Studies
-//           </p>
 const blankForm = () => ({
   id: null,
   name: "",
@@ -12483,31 +12360,8 @@ const MessagesPage = () => {
                         </button>
 
                         {/* Send reply — opens modal focused on reply box */}
-                        <button
-                          onClick={() => openView(m, true)}
-                          title="Reply"
-                          className="p-1.5 rounded-md hover:bg-emerald-50 text-[#94A3B8] hover:text-emerald-600 transition-colors"
-                        >
-                          <Send size={14} />
-                        </button>
-
-                        {/* Archive */}
-                        <button
-                          onClick={() => handleArchive(m.id)}
-                          title="Archive"
-                          className="p-1.5 rounded-md hover:bg-gray-50 text-[#94A3B8] hover:text-[#64748B] transition-colors"
-                        >
-                          <Archive size={14} />
-                        </button>
 
                         {/* Delete */}
-                        <button
-                          onClick={() => setDeleteTarget(m)}
-                          title="Delete"
-                          className="p-1.5 rounded-md hover:bg-red-50 text-[#94A3B8] hover:text-red-500 transition-colors"
-                        >
-                          <Trash2 size={14} />
-                        </button>
                       </div>
                     </Td>
                   </tr>
@@ -13155,18 +13009,18 @@ const TopNav = ({
       <h1 className="text-sm font-semibold text-[#0F172A] hidden md:block">
         {SECTION_TITLES[section]}
       </h1>
-      <div className="flex-1 max-w-sm mx-4">
-        <div className="relative">
-          <Search
+      {/* <div className="flex-1 max-w-sm mx-4"> */}
+      {/* <div className="relative"> */}
+      {/* <Search
             size={13}
             className="absolute left-3 top-1/2 -translate-y-1/2 text-[#94A3B8]"
-          />
-          <input
+          /> */}
+      {/* <input
             placeholder="Search anything..."
             className="w-full pl-9 pr-4 py-1.5 bg-[#F8FAFC] border border-[#E2E8F0] rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-[#0F4C81]/20 focus:border-[#0F4C81] focus:bg-white transition-all"
-          />
-        </div>
-      </div>
+          /> */}
+      {/* </div> */}
+      {/* </div> */}
       <div className="ml-auto flex items-center gap-2">
         <button className="relative p-2 hover:bg-[#F1F5F9] rounded-lg transition-colors text-[#64748B]">
           <Bell size={17} />
