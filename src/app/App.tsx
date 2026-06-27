@@ -12668,7 +12668,7 @@ const SettingsPage = () => {
           </Card>
 
           {/* ── SEO Settings ── */}
-          <Card className="p-6">
+          {/* <Card className="p-6">
             <h3 className="text-sm font-semibold text-[#0F172A] mb-5 flex items-center gap-2">
               <div className="w-6 h-6 bg-[#ECFDF5] rounded-lg flex items-center justify-center">
                 <Globe size={13} className="text-emerald-600" />
@@ -12720,7 +12720,7 @@ const SettingsPage = () => {
                 />
               </div>
             </div>
-          </Card>
+          </Card> */}
 
           {/* ── Social Media Links ── */}
           <Card className="p-6">
