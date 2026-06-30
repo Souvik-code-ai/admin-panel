@@ -1,9 +1,18 @@
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import { eventsData } from "./Data";
 import { Card } from "./components/ui/card";
-import { Calendar,Users,Plus,X,MapPin,Filter,Search } from "lucide-react";
+import {
+  Calendar,
+  Users,
+  Plus,
+  X,
+  MapPin,
+  Filter,
+  Search,
+  Globe,
+} from "lucide-react";
 import { Btn } from "./components/ui/Btn";
-import { PageHeader } from "./components/ui/Pageheader"; 
+import { PageHeader } from "./components/ui/Pageheader";
 import { Modal } from "./components/ui/Modal";
 import { FormLabel } from "./components/ui/FormLabel";
 import { HMSelect } from "./components/ui/HMSelect";
@@ -14,7 +23,8 @@ import { Th } from "./components/ui/Th";
 import { Td } from "./components/ui/Td";
 import { ReorderControls } from "./components/ui/ReorderControls";
 import { RowActions } from "./components/ui/RowActions";
-export  const  EventsPage = () => {
+
+export const EventsPage = () => {
   const [events, setEvents] = useState(eventsData);
   const [search, setSearch] = useState("");
 
@@ -97,37 +107,37 @@ export  const  EventsPage = () => {
     if (newImageRef.current) newImageRef.current.value = "";
   };
   const EVENT_IMAGE_MAX_SIZE_BYTES = 2 * 1024 * 1024; // 2MB
-const EVENT_IMAGE_WIDTH = 800;
-const EVENT_IMAGE_HEIGHT = 700;
-const getEventImageDimensions = (file) => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      resolve({ width: img.naturalWidth, height: img.naturalHeight });
-      URL.revokeObjectURL(url);
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error("Could not read image"));
-    };
-    img.src = url;
-  });
-};
-const validateEventImageFile = async (file) => {
-  if (file.size > EVENT_IMAGE_MAX_SIZE_BYTES) {
-    return `Image must be max ${EVENT_IMAGE_MAX_SIZE_BYTES / (1024 * 1024)}MB (selected: ${(file.size / (1024 * 1024)).toFixed(2)}MB).`;
-  }
-  try {
-    const { width, height } = await getEventImageDimensions(file);
-    if (width !== EVENT_IMAGE_WIDTH || height !== EVENT_IMAGE_HEIGHT) {
-      return `Image must be exactly ${EVENT_IMAGE_WIDTH}x${EVENT_IMAGE_HEIGHT}px (selected: ${width}x${height}px).`;
+  const EVENT_IMAGE_WIDTH = 800;
+  const EVENT_IMAGE_HEIGHT = 700;
+  const getEventImageDimensions = (file) => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        resolve({ width: img.naturalWidth, height: img.naturalHeight });
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error("Could not read image"));
+      };
+      img.src = url;
+    });
+  };
+  const validateEventImageFile = async (file) => {
+    if (file.size > EVENT_IMAGE_MAX_SIZE_BYTES) {
+      return `Image must be max ${EVENT_IMAGE_MAX_SIZE_BYTES / (1024 * 1024)}MB (selected: ${(file.size / (1024 * 1024)).toFixed(2)}MB).`;
     }
-  } catch {
-    return "Could not read this image. Please try another file.";
-  }
-  return "";
-};
+    try {
+      const { width, height } = await getEventImageDimensions(file);
+      if (width !== EVENT_IMAGE_WIDTH || height !== EVENT_IMAGE_HEIGHT) {
+        return `Image must be exactly ${EVENT_IMAGE_WIDTH}x${EVENT_IMAGE_HEIGHT}px (selected: ${width}x${height}px).`;
+      }
+    } catch {
+      return "Could not read this image. Please try another file.";
+    }
+    return "";
+  };
   const handleNewImageChange = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -367,7 +377,7 @@ const validateEventImageFile = async (file) => {
             >
               <s.icon size={22} className="text-lime-600" />
             </div>
-            <div>
+            <div className="flex flex-col justify-center items-center">
               <p className="text-2xl font-bold text-[#0F172A]">{s.value}</p>
               <p className="text-xs text-[#64748B] font-medium">{s.label}</p>
             </div>

@@ -1,7 +1,7 @@
-import { useState ,useRef} from "react";
+import { useState, useRef } from "react";
 import { campaignsData } from "./Data";
 import { FormLabel } from "./components/ui/FormLabel";
-import {Film,X} from "lucide-react"
+import { Film, X } from "lucide-react";
 import { Modal } from "./components/ui/Modal";
 import { Btn } from "./components/ui/Btn";
 import { ReorderControls } from "./components/ui/ReorderControls";
@@ -13,7 +13,7 @@ import { HMSelect } from "./components/ui/HMSelect";
 import { StatusBadge } from "./components/ui/Statusbadge";
 import { UploadZone } from "./components/ui/UploadZone";
 import { Card } from "./components/ui/card";
-import { Filter,Eye,Search,Plus } from "lucide-react";
+import { Filter, Eye, Search, Plus, Upload } from "lucide-react";
 import { PageHeader } from "./components/ui/Pageheader";
 const CAMP_TEMPLATE_MAX_MB = 2;
 const CAMP_TEMPLATE_WIDTH = 800;

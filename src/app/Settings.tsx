@@ -1,7 +1,18 @@
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import { PageHeader } from "./components/ui/Pageheader";
 import { Card } from "./components/ui/card";
-import { ImageIcon,X,Upload,Instagram,Check,Star,ChevronRight,Linkedin,Facebook } from "lucide-react";
+import {
+  ImageIcon,
+  X,
+  Upload,
+  Instagram,
+  Check,
+  Star,
+  ChevronRight,
+  Linkedin,
+  Facebook,
+  Twitter,
+} from "lucide-react";
 import { Btn } from "./components/ui/Btn";
 export const SettingsPage = () => {
   const [seo, setSeo] = useState({

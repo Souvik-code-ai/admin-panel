@@ -1,8 +1,8 @@
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import { RowActions } from "./components/ui/RowActions";
 import { ReorderControls } from "./components/ui/ReorderControls";
-import {seedClients,seedStories,seedFeedCards} from "../app/Data"
-import { Client,ClientStory,FeedCard,EventType ,HMStatus} from "./Type";
+import { seedClients, seedStories, seedFeedCards } from "../app/Data";
+import { Client, ClientStory, FeedCard, EventType, HMStatus } from "./Type";
 import { FormLabel } from "./components/ui/FormLabel";
 import { Btn } from "./components/ui/Btn";
 import { Modal } from "./components/ui/Modal";
@@ -11,99 +11,99 @@ import { HMInput } from "./components/ui/HMInput";
 import { MediaGrid } from "./components/ui/MediaGrid";
 import { UploadZone } from "./components/ui/UploadZone";
 import { StatusBadge } from "./components/ui/Statusbadge";
-import {Card} from "./components/ui/card"
+import { Card } from "./components/ui/card";
 import { ClientAvatar } from "./components/ui/ClientAvatar";
-import { MapPin,Users } from "lucide-react";
+import { MapPin, User, Plus } from "lucide-react";
 import { Th } from "./components/ui/Th";
 import { Td } from "./components/ui/Td";
-const HomeManagementPage = () => {
+export const HomeManagementPage = () => {
   const [tab, setTab] = useState<"clients" | "feed">("clients");
   const [editImages, setEditImages] = useState<string[]>([]);
   const editImageRef = useRef<HTMLInputElement>(null);
   const getImageDimensions = (
-  file: File,
-): Promise<{ width: number; height: number }> => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      resolve({ width: img.naturalWidth, height: img.naturalHeight });
-      URL.revokeObjectURL(url);
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error("Could not read image"));
-    };
-    img.src = url;
-  });
-};
-const ACT_TEMPLATE_WIDTH = 800;
-const ACT_TEMPLATE_HEIGHT = 700;
-const ACT_TEMPLATE_MAX_MB = 10;
+    file: File,
+  ): Promise<{ width: number; height: number }> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        resolve({ width: img.naturalWidth, height: img.naturalHeight });
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error("Could not read image"));
+      };
+      img.src = url;
+    });
+  };
+  const ACT_TEMPLATE_WIDTH = 800;
+  const ACT_TEMPLATE_HEIGHT = 700;
+  const ACT_TEMPLATE_MAX_MB = 10;
 
-const ACT_BODY_WIDTH = 1920;
-const ACT_BODY_HEIGHT = 1080;
-const ACT_BODY_MAX_MB = 10;
-const LOGO_MAX_SIZE_BYTES = 100 * 1024; // 100KB
-const LOGO_WIDTH = 500;
-const LOGO_HEIGHT = 500;
+  const ACT_BODY_WIDTH = 1920;
+  const ACT_BODY_HEIGHT = 1080;
+  const ACT_BODY_MAX_MB = 10;
+  const LOGO_MAX_SIZE_BYTES = 100 * 1024; // 100KB
+  const LOGO_WIDTH = 500;
+  const LOGO_HEIGHT = 500;
 
-const MEDIA_MAX_SIZE_BYTES = 2 * 1024 * 1024; // 2MB
-const MEDIA_MAX_WIDTH = 1080;
-const MEDIA_MAX_HEIGHT = 1920;
-const MEDIA_MIN_WIDTH = 720;
-const getActivationImageDimensions = (
-  file: File,
-): Promise<{ width: number; height: number }> => {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    const url = URL.createObjectURL(file);
-    img.onload = () => {
-      resolve({ width: img.naturalWidth, height: img.naturalHeight });
-      URL.revokeObjectURL(url);
-    };
-    img.onerror = () => {
-      URL.revokeObjectURL(url);
-      reject(new Error("Could not read image"));
-    };
-    img.src = url;
-  });
-};
+  const MEDIA_MAX_SIZE_BYTES = 2 * 1024 * 1024; // 2MB
+  const MEDIA_MAX_WIDTH = 1080;
+  const MEDIA_MAX_HEIGHT = 1920;
+  const MEDIA_MIN_WIDTH = 720;
+  const getActivationImageDimensions = (
+    file: File,
+  ): Promise<{ width: number; height: number }> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        resolve({ width: img.naturalWidth, height: img.naturalHeight });
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = () => {
+        URL.revokeObjectURL(url);
+        reject(new Error("Could not read image"));
+      };
+      img.src = url;
+    });
+  };
   // Modal visibility
   const validateLogoFile = async (file: File): Promise<string> => {
-  if (file.size > LOGO_MAX_SIZE_BYTES) {
-    return `Logo must be max ${LOGO_MAX_SIZE_BYTES / 1024}KB (selected: ${(file.size / 1024).toFixed(0)}KB).`;
-  }
-  try {
-    const { width, height } = await getActivationImageDimensions(file);
-    if (width !== LOGO_WIDTH || height !== LOGO_HEIGHT) {
-      return `Logo must be exactly ${LOGO_WIDTH}x${LOGO_HEIGHT}px (selected: ${width}x${height}px).`;
+    if (file.size > LOGO_MAX_SIZE_BYTES) {
+      return `Logo must be max ${LOGO_MAX_SIZE_BYTES / 1024}KB (selected: ${(file.size / 1024).toFixed(0)}KB).`;
     }
-  } catch {
-    return "Could not read this image. Please try another file.";
-  }
-  return "";
-};
-const validateMediaFile = async (file: File): Promise<string> => {
-  if (file.size > MEDIA_MAX_SIZE_BYTES) {
-    return `File must be max ${MEDIA_MAX_SIZE_BYTES / (1024 * 1024)}MB (selected: ${(file.size / (1024 * 1024)).toFixed(2)}MB).`;
-  }
-  if (file.type.startsWith("video/")) {
-    return ""; // videos: size-only check, no dimension validation
-  }
-  try {
-    const { width, height } = await getImageDimensions(file);
-    if (width > MEDIA_MAX_WIDTH || height > MEDIA_MAX_HEIGHT) {
-      return `Image resolution must not exceed ${MEDIA_MAX_WIDTH}x${MEDIA_MAX_HEIGHT}px (selected: ${width}x${height}px).`;
+    try {
+      const { width, height } = await getActivationImageDimensions(file);
+      if (width !== LOGO_WIDTH || height !== LOGO_HEIGHT) {
+        return `Logo must be exactly ${LOGO_WIDTH}x${LOGO_HEIGHT}px (selected: ${width}x${height}px).`;
+      }
+    } catch {
+      return "Could not read this image. Please try another file.";
     }
-    if (width < MEDIA_MIN_WIDTH) {
-      return `Image width must be at least ${MEDIA_MIN_WIDTH}px (selected width: ${width}px).`;
+    return "";
+  };
+  const validateMediaFile = async (file: File): Promise<string> => {
+    if (file.size > MEDIA_MAX_SIZE_BYTES) {
+      return `File must be max ${MEDIA_MAX_SIZE_BYTES / (1024 * 1024)}MB (selected: ${(file.size / (1024 * 1024)).toFixed(2)}MB).`;
     }
-  } catch {
-    return "Could not read this image. Please try another file.";
-  }
-  return "";
-};
+    if (file.type.startsWith("video/")) {
+      return ""; // videos: size-only check, no dimension validation
+    }
+    try {
+      const { width, height } = await getImageDimensions(file);
+      if (width > MEDIA_MAX_WIDTH || height > MEDIA_MAX_HEIGHT) {
+        return `Image resolution must not exceed ${MEDIA_MAX_WIDTH}x${MEDIA_MAX_HEIGHT}px (selected: ${width}x${height}px).`;
+      }
+      if (width < MEDIA_MIN_WIDTH) {
+        return `Image width must be at least ${MEDIA_MIN_WIDTH}px (selected width: ${width}px).`;
+      }
+    } catch {
+      return "Could not read this image. Please try another file.";
+    }
+    return "";
+  };
   const [showAddClientModal, setShowAddClientModal] = useState(false);
   const [showStoryModal, setShowStoryModal] = useState(false);
   const [showFeedModal, setShowFeedModal] = useState(false);
